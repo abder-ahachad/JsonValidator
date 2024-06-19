@@ -1,7 +1,9 @@
+#ifndef LEXER
+#define LEXER
 #include <string>
 #include <list>
 #include "utilities.h"
-
+#define INVALID_TOKENIZATION Tokenization(list<Token>())
 using namespace std;
 
 enum Token {
@@ -28,75 +30,8 @@ public :
         return *prev(current);
     }
     bool is_valid() {
-        return token_list.size();
+        return token_list.size() != 0;
     }
 };
 
-Tokenization tokenize(string& text) {
-    list<Token> token_list;
-    for(int i = 0; i < text.size(); ++i) {
-        if(is_white_space(text[i])) {
-            continue;
-        }
-        if(text[i] == '{') {
-            token_list.push_back(Token(L_BRACE));
-            continue;
-        }
-        if(text[i] == '}') {
-            token_list.push_back(Token(R_BRACE));
-            continue;
-        }
-        if(text[i] == '[') {
-            token_list.push_back(Token(L_BRACKET));
-            continue;
-        }
-        if(text[i] == ']') {
-            token_list.push_back(Token(R_BRACKET));
-            continue;
-        }
-        if(text[i] == ',') {
-            token_list.push_back(Token(COMMA));
-            continue;
-        }
-        if(text[i] == 'n') {
-            if(text.substr(i, 4) == "null") {
-                token_list.push_back(Token(NULL_));
-                i+=3;
-                continue;
-            }
-            else {
-                return Tokenization(list<Token>()); 
-            }
-        }
-        if(text[i] == 't') {
-            if(text.substr(i, 4) == "true") {
-                token_list.push_back(Token(BOOLEAN));
-                i+=3;
-                continue;
-            }
-            else {
-                return Tokenization(list<Token>()); 
-            }
-        }
-        if(text[i] == 'f') {
-            if(text.substr(i, 4) == "false") {
-                token_list.push_back(Token(BOOLEAN));
-                i+=3;
-                continue;
-            }
-            else {
-                return Tokenization(list<Token>()); 
-            }
-        }
-        if(is_numerical(text[i])){
-            while(i<text.size() && is_numerical(text[i])) {
-                i++;
-            }
-            token_list.push_back(Token(NUMBER));
-            if(i == text.size())
-                return Tokenization(token_list);
-            i--;
-        }
-
-    }
-}
+#endif
