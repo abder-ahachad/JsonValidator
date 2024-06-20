@@ -2,6 +2,7 @@
 #define PARSER
 
 #include "Lexer.h"
+
 bool parse_json(Tokenization& stream);
 bool parse_object(Tokenization& stream);
 bool parse_list(Tokenization& stream);

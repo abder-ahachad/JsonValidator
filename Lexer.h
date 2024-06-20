@@ -1,10 +1,8 @@
 #ifndef LEXER
 #define LEXER
-#include <string>
-#include <list>
+
 #include "utilities.h"
 #define INVALID_TOKENIZATION Tokenization(list<Token>())
-using namespace std;
 
 enum Token {
     L_BRACE,    // {
@@ -44,4 +42,5 @@ public :
     }
 };
 
+Tokenization tokenize(string& text);
 #endif

@@ -124,6 +124,9 @@ Tokenization tokenize(string& text) {
 
         return INVALID_TOKENIZATION;
     }
-
+    for(auto itr = token_list.begin(); itr!= token_list.end(); ++itr) {
+        cout<<*itr<<" ";
+    }
+    cout<<endl;
     return Tokenization(token_list);
 }
