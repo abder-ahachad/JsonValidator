@@ -136,7 +136,6 @@ Tokenization tokenize(string& text) {
         ERROR(token_list,i)
         return INVALID_TOKENIZATION;
     }
-    SHOW(token_list)
     return Tokenization(token_list);
 }
 

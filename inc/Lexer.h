@@ -29,12 +29,15 @@ public :
     Tokenization(list<Token> token_list): token_list(token_list){
         current = this->token_list.begin();
     }
-    Token next() {
+    Token get_current() {
         if(current == token_list.end())
             return END;
-        Token token = *current;
-        ++current;
-        return token;
+        return *current;
+    }
+    void next() {
+        if(current == token_list.end())
+            return;
+        current++;
     }
     bool is_valid() {
         return !token_list.empty();

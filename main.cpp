@@ -6,15 +6,15 @@ using namespace std;
 
 int main() {
     string text = readFileToString("../test.json");
-    cout<<"String to evaluate : \n"<<text<<endl;
+    cout<<"Chaine de caractère à évaluer : \n"<<text<<endl;
 
     Tokenization tokens_stream =  tokenize(text);
     if(!tokens_stream.is_valid())
-        cout<<"pas valide"<<endl;
+        cout<<">> Format pas valide"<<endl;
     else {
         if(parse_json(tokens_stream))
-            cout<<"valide"<<endl;
+            cout<<">> Format valide"<<endl;
         else
-            cout<<"pas valide"<<endl;
+            cout<<">> Format pas valide"<<endl;
     }
 }
