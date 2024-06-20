@@ -1,4 +1,4 @@
-#include "utilities.h"
+#include "../inc/utilities.h"
 
 bool is_hexadecimal(const string& s) {
     for(char c:s) {

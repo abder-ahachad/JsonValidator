@@ -1,7 +1,7 @@
 //
 // Created by abder on 19/06/24.
 //
-#include "Parser.h"
+#include "inc/Parser.h"
 using namespace std;
 
 int main() {

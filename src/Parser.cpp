@@ -1,4 +1,4 @@
-#include "Parser.h"
+#include "../inc/Parser.h"
 
 bool parse_json(Tokenization& stream) {
     if(stream.next() == L_BRACE) {

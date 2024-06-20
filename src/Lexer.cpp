@@ -1,5 +1,6 @@
-#include "Lexer.h"
+#include "../inc/Lexer.h"
 #define ERROR(i) cout<<"error at char : "<<i<<endl;
+
 Tokenization tokenize(string& text) {
     list<Token> token_list;
     for(int i = 0; i < text.size(); ++i) {
