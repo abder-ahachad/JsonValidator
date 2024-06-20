@@ -3,7 +3,7 @@
 Tokenization tokenize(string& text) {
     list<Token> token_list;
     for(int i = 0; i < text.size(); ++i) {
-        if(is_white_space(text[i])) {
+        if(isspace(text[i])) {
             continue;
         }
         if(text[i] == '{') {
@@ -26,8 +26,15 @@ Tokenization tokenize(string& text) {
             token_list.push_back(Token(COMMA));
             continue;
         }
+        if(text[i] == ':') {
+            token_list.push_back(Token(DOTS));
+            continue;
+        }
 
         if(text[i] == 'n') {
+            if(i+3 >= text.size()) {
+                return INVALID_TOKENIZATION;
+            }
             if(text.substr(i, 4) == "null") {
                 token_list.push_back(Token(NULL_));
                 i+=3;
@@ -39,6 +46,9 @@ Tokenization tokenize(string& text) {
         }
 
         if(text[i] == 't') {
+            if(i+3 >= text.size()) {
+                return INVALID_TOKENIZATION;
+            }
             if(text.substr(i, 4) == "true") {
                 token_list.push_back(Token(BOOLEAN));
                 i+=3;
@@ -50,9 +60,12 @@ Tokenization tokenize(string& text) {
         }
 
         if(text[i] == 'f') {
-            if(text.substr(i, 4) == "false") {
+            if(i+4 >= text.size()) {
+                return INVALID_TOKENIZATION;
+            }
+            if(text.substr(i, 5) == "false") {
                 token_list.push_back(Token(BOOLEAN));
-                i+=3;
+                i+=4;
                 continue;
             }
             else {
@@ -60,8 +73,8 @@ Tokenization tokenize(string& text) {
             }
         }
 
-        if(is_numerical(text[i])){ // number token
-            while(i<text.size() && is_numerical(text[i])) {
+        if(isdigit(text[i])){ // number token
+            while(i<text.size() && isdigit(text[i])) {
                 i++;
             }
             if(i == text.size())
@@ -101,7 +114,7 @@ Tokenization tokenize(string& text) {
                     i++;
                 }
             }
-            if(i == text.size()) {
+            if(i == text.size() || i == text.size() - 1) {
                 return INVALID_TOKENIZATION;        // a json file can't end with a string
             }
             token_list.push_back(Token(STRING));
@@ -111,4 +124,6 @@ Tokenization tokenize(string& text) {
 
         return INVALID_TOKENIZATION;
     }
+
+    return Tokenization(token_list);
 }

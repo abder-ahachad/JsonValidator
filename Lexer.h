@@ -12,25 +12,35 @@ enum Token {
     L_BRACKET,  // [
     R_BRACKET,  // ]
     COMMA,      // ,
+    DOTS,       // :
     NULL_,
-    BOOLEAN,       
-    NUMBER,        
-    STRING
+    BOOLEAN,
+    NUMBER,
+    STRING,
+    END
 };
 
 class Tokenization {
     const list<Token>& token_list;
-    list<Token>::iterator current;
+    list<Token>::const_iterator current;
 public :
-    Tokenization(list<Token>& token_list): token_list(token_list){
+    Tokenization(const list<Token>& token_list): token_list(token_list){
         current = this->token_list.begin();
     }
     Token next() {
+        if(current == token_list.end())
+            return END;
         current++;
         return *prev(current);
     }
     bool is_valid() {
         return token_list.size() != 0;
+    }
+    bool match(Token tk) {
+        if(current == token_list.end())
+            return tk == END;
+        current++;
+        return tk == *prev(current);
     }
 };
 
