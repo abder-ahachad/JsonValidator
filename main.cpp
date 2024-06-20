@@ -1,12 +1,18 @@
 //
 // Created by abder on 19/06/24.
 //
-#include <bits/stdc++.h>
 #include "Parser.h"
 using namespace std;
 
 int main() {
-    string text = readFileToString(FILENAME);
+    string text = readFileToString("../test.json");
     Tokenization tokens_stream =  tokenize(text);
-
+    if(!tokens_stream.is_valid())
+        cout<<"pas valide"<<endl;
+    else {
+        if(parse_json(tokens_stream))
+            cout<<"valid"<<endl;
+        else
+            cout<<"pas valide"<<endl;
+    }
 }
