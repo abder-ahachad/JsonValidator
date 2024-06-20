@@ -8,32 +8,32 @@
         cout<<"error at char : "<<i<<endl;
 
 enum Token {
-    L_BRACE,    // {
-    R_BRACE,    // }
-    L_BRACKET,  // [
-    R_BRACKET,  // ]
-    COMMA,      // ,
-    DOTS,       // :
-    NULL_,
-    BOOLEAN,
-    NUMBER,
-    STRING,
-    END
+    L_BRACE = 0,    // {
+    R_BRACE = 1,    // }
+    L_BRACKET = 2,  // [
+    R_BRACKET = 3,  // ]
+    COMMA = 4,      // ,
+    DOTS = 5,       // :
+    NULL_ = 6,
+    BOOLEAN = 7,
+    NUMBER = 8,
+    STRING = 9,
+    END = 10
 };
 string token_to_string(Token tk);
 
 class Tokenization {
-    const list<Token>& token_list;
+    const list<Token> token_list;
     list<Token>::const_iterator current;
 public :
-    Tokenization(const list<Token>& token_list): token_list(token_list){
+    Tokenization(list<Token> token_list): token_list(token_list){
         current = this->token_list.begin();
     }
     Token next() {
         if(current == token_list.end())
             return END;
         Token token = *current;
-        current++;
+        ++current;
         return token;
     }
     bool is_valid() {

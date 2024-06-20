@@ -136,10 +136,7 @@ Tokenization tokenize(string& text) {
         ERROR(token_list,i)
         return INVALID_TOKENIZATION;
     }
-    for(auto itr = token_list.begin(); itr!= token_list.end(); ++itr) {
-        cout<<token_to_string(*itr)<<" ";
-    }
-    cout<<endl;
+    SHOW(token_list)
     return Tokenization(token_list);
 }
 

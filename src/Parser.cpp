@@ -66,4 +66,5 @@ bool parse_value(Tokenization& stream) {
     if(tk == L_BRACKET) {
         return parse_list(stream);
     }
+    return false;
 }

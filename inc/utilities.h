@@ -5,11 +5,13 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#define SHOW(list) for(auto itr = list.begin(); itr!= list.end(); ++itr) {\
+#include <iterator>
+#define SHOW(list) cout<<"Tokenazation : "\
+    for(auto itr = list.begin(); itr!= list.end(); ++itr) {\
         cout<<token_to_string(*itr)<<" ";\
     }\
     cout<<endl;
-    
+
 using namespace std;
 
 
