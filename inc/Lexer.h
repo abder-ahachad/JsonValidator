@@ -1,8 +1,11 @@
 #ifndef LEXER
 #define LEXER
 
+#include <cassert>
 #include "utilities.h"
 #define INVALID_TOKENIZATION Tokenization(list<Token>())
+#define ERROR(list, i)  SHOW(list)\
+        cout<<"error at char : "<<i<<endl;
 
 enum Token {
     L_BRACE,    // {
@@ -17,6 +20,7 @@ enum Token {
     STRING,
     END
 };
+string token_to_string(Token tk);
 
 class Tokenization {
     const list<Token>& token_list;
@@ -28,11 +32,12 @@ public :
     Token next() {
         if(current == token_list.end())
             return END;
+        Token token = *current;
         current++;
-        return *prev(current);
+        return token;
     }
     bool is_valid() {
-        return token_list.size() != 0;
+        return !token_list.empty();
     }
     bool match(Token tk) {
         if(current == token_list.end())
@@ -43,5 +48,4 @@ public :
 };
 
 Tokenization tokenize(string& text);
-string token_to_string(Token tk);
 #endif

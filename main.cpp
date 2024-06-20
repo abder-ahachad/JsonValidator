@@ -6,6 +6,7 @@ using namespace std;
 
 int main() {
     string text = readFileToString("../test.json");
+    cout<<text<<endl;
     Tokenization tokens_stream =  tokenize(text);
     if(!tokens_stream.is_valid())
         cout<<"pas valide"<<endl;

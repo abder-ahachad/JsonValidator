@@ -5,7 +5,11 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
+#define SHOW(list) for(auto itr = list.begin(); itr!= list.end(); ++itr) {\
+        cout<<token_to_string(*itr)<<" ";\
+    }\
+    cout<<endl;
+    
 using namespace std;
 
 

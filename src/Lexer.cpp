@@ -1,5 +1,4 @@
 #include "../inc/Lexer.h"
-#define ERROR(i) cout<<"error at char : "<<i<<endl;
 
 Tokenization tokenize(string& text) {
     list<Token> token_list;
@@ -34,7 +33,7 @@ Tokenization tokenize(string& text) {
 
         if(text[i] == 'n') {
             if(i+3 >= text.size()) {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION;
             }
             if(text.substr(i, 4) == "null") {
@@ -43,14 +42,14 @@ Tokenization tokenize(string& text) {
                 continue;
             }
             else {
-                ERROR(i)
+                ERROR(token_list, i)
                 return INVALID_TOKENIZATION; 
             }
         }
 
         if(text[i] == 't') {
             if(i+3 >= text.size()) {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION;
             }
             if(text.substr(i, 4) == "true") {
@@ -59,14 +58,14 @@ Tokenization tokenize(string& text) {
                 continue;
             }
             else {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION; 
             }
         }
 
         if(text[i] == 'f') {
             if(i+4 >= text.size()) {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION;
             }
             if(text.substr(i, 5) == "false") {
@@ -75,7 +74,7 @@ Tokenization tokenize(string& text) {
                 continue;
             }
             else {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION; 
             }
         }
@@ -85,7 +84,7 @@ Tokenization tokenize(string& text) {
                 i++;
             }
             if(i == text.size()) {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION;        // a json file can't end with a number
             }
             token_list.push_back(Token(NUMBER));
@@ -98,7 +97,7 @@ Tokenization tokenize(string& text) {
             while(i<text.size() && text[i]!='"') {
                 if(text[i] == '\\'){
                     if(i == text.size()-1) {
-                        ERROR(i)
+                        ERROR(token_list,i)
                         return INVALID_TOKENIZATION;
                     }
                     if(text[i+1] == '/' || text[i+1] == '"' || text[i+1] == '\\' || text[i+1] == 'b' ||
@@ -107,19 +106,19 @@ Tokenization tokenize(string& text) {
                     }
                     else if(text[i+1] == 'u') {
                         if(i+5 >= text.size()) {
-                            ERROR(i)
+                            ERROR(token_list,i)
                             return INVALID_TOKENIZATION;
                         }
                         if(is_hexadecimal(text.substr(i+1, 4))) {
                             i+=5;
                         }
                         else {
-                            ERROR(i)
+                            ERROR(token_list,i)
                             return INVALID_TOKENIZATION;
                         }
                     }
                     else {
-                        ERROR(i)
+                        ERROR(token_list,i)
                         return INVALID_TOKENIZATION;
                     }
                 }
@@ -128,14 +127,13 @@ Tokenization tokenize(string& text) {
                 }
             }
             if(i == text.size() || i == text.size() - 1) {
-                ERROR(i)
+                ERROR(token_list,i)
                 return INVALID_TOKENIZATION;        // a json file can't end with a string
             }
             token_list.push_back(Token(STRING));
-            i--;
             continue;
         }
-        ERROR(i)
+        ERROR(token_list,i)
         return INVALID_TOKENIZATION;
     }
     for(auto itr = token_list.begin(); itr!= token_list.end(); ++itr) {
