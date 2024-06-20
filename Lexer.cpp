@@ -1,5 +1,5 @@
 #include "Lexer.h"
-
+#define ERROR(i) cout<<"error at char : "<<i<<endl;
 Tokenization tokenize(string& text) {
     list<Token> token_list;
     for(int i = 0; i < text.size(); ++i) {
@@ -33,6 +33,7 @@ Tokenization tokenize(string& text) {
 
         if(text[i] == 'n') {
             if(i+3 >= text.size()) {
+                ERROR(i)
                 return INVALID_TOKENIZATION;
             }
             if(text.substr(i, 4) == "null") {
@@ -41,12 +42,14 @@ Tokenization tokenize(string& text) {
                 continue;
             }
             else {
+                ERROR(i)
                 return INVALID_TOKENIZATION; 
             }
         }
 
         if(text[i] == 't') {
             if(i+3 >= text.size()) {
+                ERROR(i)
                 return INVALID_TOKENIZATION;
             }
             if(text.substr(i, 4) == "true") {
@@ -55,12 +58,14 @@ Tokenization tokenize(string& text) {
                 continue;
             }
             else {
+                ERROR(i)
                 return INVALID_TOKENIZATION; 
             }
         }
 
         if(text[i] == 'f') {
             if(i+4 >= text.size()) {
+                ERROR(i)
                 return INVALID_TOKENIZATION;
             }
             if(text.substr(i, 5) == "false") {
@@ -69,6 +74,7 @@ Tokenization tokenize(string& text) {
                 continue;
             }
             else {
+                ERROR(i)
                 return INVALID_TOKENIZATION; 
             }
         }
@@ -77,8 +83,10 @@ Tokenization tokenize(string& text) {
             while(i<text.size() && isdigit(text[i])) {
                 i++;
             }
-            if(i == text.size())
+            if(i == text.size()) {
+                ERROR(i)
                 return INVALID_TOKENIZATION;        // a json file can't end with a number
+            }
             token_list.push_back(Token(NUMBER));
             i--;
             continue;
@@ -89,6 +97,7 @@ Tokenization tokenize(string& text) {
             while(i<text.size() && text[i]!='"') {
                 if(text[i] == '\\'){
                     if(i == text.size()-1) {
+                        ERROR(i)
                         return INVALID_TOKENIZATION;
                     }
                     if(text[i+1] == '/' || text[i+1] == '"' || text[i+1] == '\\' || text[i+1] == 'b' ||
@@ -97,16 +106,19 @@ Tokenization tokenize(string& text) {
                     }
                     else if(text[i+1] == 'u') {
                         if(i+5 >= text.size()) {
+                            ERROR(i)
                             return INVALID_TOKENIZATION;
                         }
                         if(is_hexadecimal(text.substr(i+1, 4))) {
                             i+=5;
                         }
                         else {
+                            ERROR(i)
                             return INVALID_TOKENIZATION;
                         }
                     }
                     else {
+                        ERROR(i)
                         return INVALID_TOKENIZATION;
                     }
                 }
@@ -115,18 +127,46 @@ Tokenization tokenize(string& text) {
                 }
             }
             if(i == text.size() || i == text.size() - 1) {
+                ERROR(i)
                 return INVALID_TOKENIZATION;        // a json file can't end with a string
             }
             token_list.push_back(Token(STRING));
             i--;
             continue;
         }
-
+        ERROR(i)
         return INVALID_TOKENIZATION;
     }
     for(auto itr = token_list.begin(); itr!= token_list.end(); ++itr) {
-        cout<<*itr<<" ";
+        cout<<token_to_string(*itr)<<" ";
     }
     cout<<endl;
     return Tokenization(token_list);
+}
+
+string token_to_string(Token tk) {
+    switch(tk) {
+        case Token::BOOLEAN:
+            return "BOOLEAN";
+        case Token::COMMA:
+            return "COMMA";
+        case Token::DOTS:
+            return "DOTS";
+        case Token::END:
+            return "END";
+        case Token::L_BRACE:
+            return "L_BRACE";
+        case Token::R_BRACE:
+            return "R_BRACE";
+        case Token::L_BRACKET:
+            return "L_BRACKET";
+        case Token::R_BRACKET:
+            return "R_BRACKET";
+        case Token::NULL_:
+            return "NULL";
+        case Token::NUMBER:
+            return "NUMBER";
+        default:
+            return "STRING";
+    }
 }

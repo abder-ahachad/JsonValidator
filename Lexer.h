@@ -43,4 +43,5 @@ public :
 };
 
 Tokenization tokenize(string& text);
+string token_to_string(Token tk);
 #endif
